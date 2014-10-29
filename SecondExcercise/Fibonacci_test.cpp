@@ -5,5 +5,5 @@
  *      Author: Schweiker
  */
 
-#include "Fibonacci.cpp"
+#include "Fibonacci.h"
 
