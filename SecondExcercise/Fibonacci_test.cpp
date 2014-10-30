@@ -6,7 +6,6 @@
  */
 
 #include "Fibonacci.h"
-<<<<<<< HEAD
 #include "limits.h"
 #include "gtest/gtest.h"
 #include <iostream>
@@ -30,6 +29,4 @@ class FibonacciTest : public ::testing::Test
 
 };
 
-=======
->>>>>>> 0f7639ace315b7dd1425879c2e72158558d85012
 
