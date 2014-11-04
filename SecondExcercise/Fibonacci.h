@@ -3,6 +3,8 @@ class Fibonacci
 
 	public:
 
-		int calculateNthFibonacciNumber(int);
+		int calculateNthFibonacciNumber1(int);
+		int calculateNthFibonacciNumber2(int);
+		int calculateNthFibonacciNumber3(int);
 }
 ;
