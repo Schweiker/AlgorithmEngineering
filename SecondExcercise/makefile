@@ -1,19 +1,22 @@
 #makros
 CXX = g++
-OBJECTS = $(SRC:.cpp=.o)
-SRC = src/Fibonacci.cpp
-CPPFLAGS = -Wall -O
-CXXFLAGS = -isystem $(GTEST_DIR)/include
-GTEST_DIR = C:\gtest-1.7.0
-EXE = Fibonacci
+CXXFLAGS = -Wall -O -I/usr/local/include
+LDFLAGS = /usr/lib/libgtest.a -pthread
+SOURCES = src/Fibonacci.cpp
+OBJECTS = $(SOURCES:.cpp=.o)
+EXECUTABLE = Fibonacci
+
+#builder
 
 .PHONY: all
-all: build
+all: tests
 
-.PHONY: build
-build: $(OBJECTS)
-	$(CXX) $(OBJECTS) $(CPPFLAGS) $(CXXFLAGS) -o $(EXE)
+.PHONY: tests
+tests: $(OBJECTS)
+	$(CXX) $(OBJECTS) $(LDFLAGS) $(CXXFLAGS) -o $(EXECUTABLE)
+	./$(EXECUTABLE_TEST)
 
+# Removes all objects and executables:
 .PHONY: clean
 clean:
-	rm -f $(OBJECTS) $(EXE) gtest.a gtest_main.a *.o
+	rm -f $(OBJECTS) $(TESTOBJECTS) $(MAINOBJECTS) $(EXECUTABLE) $(EXECUTABLE_TEST)
