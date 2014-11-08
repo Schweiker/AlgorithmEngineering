@@ -14,7 +14,7 @@ all: tests
 .PHONY: tests
 tests: $(OBJECTS)
 	$(CXX) $(OBJECTS) $(LDFLAGS) $(CXXFLAGS) -o $(EXECUTABLE)
-	./$(EXECUTABLE_TEST)
+	./$(EXECUTABLE)
 
 # Removes all objects and executables:
 .PHONY: clean
