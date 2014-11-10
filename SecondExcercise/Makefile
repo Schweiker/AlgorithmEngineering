@@ -1,10 +1,10 @@
 #makros
+SHELL = /bin/sh
 CXX = g++
+SRC = src/*.cpp
 OBJECTS = $(SRC:.cpp=.o)
-SRC = src/Fibonacci.cpp
 CPPFLAGS = -Wall -O
-CXXFLAGS = -isystem $(GTEST_DIR)/include
-GTEST_DIR = C:\gtest-1.7.0
+CXXFLAGS = -I/gtest-1.7.0/include/gtest
 EXE = Fibonacci
 
 .PHONY: all
@@ -16,4 +16,4 @@ build: $(OBJECTS)
 
 .PHONY: clean
 clean:
-	rm -f $(OBJECTS) $(EXE) gtest.a gtest_main.a *.o
+	rm -f $(OBJECTS) $(EXE)

@@ -50,6 +50,49 @@ int calculateNthFibonacciNumber3(int n)
 	return b;
 }
 
+void power(int F[2][2], int n);
+
+//calculates the nth Fibonacci Number in O(log n) because of usage of Matrix.
+
+int calculateNthFibonacciNumber4(int n)
+{
+  int F[2][2] = {{1,1},{1,0}};
+
+  if (n == 0)
+
+      return 0;
+
+  power(F, n-1);
+
+  return F[0][0];
+}
+
+//simple matrix multiplikation
+
+void multiply(int F[2][2], int M[2][2])
+{
+  int x =  F[0][0]*M[0][0] + F[0][1]*M[1][0];
+  int y =  F[0][0]*M[0][1] + F[0][1]*M[1][1];
+  int z =  F[1][0]*M[0][0] + F[1][1]*M[1][0];
+  int w =  F[1][0]*M[0][1] + F[1][1]*M[1][1];
+
+  F[0][0] = x;
+  F[0][1] = y;
+  F[1][0] = z;
+  F[1][1] = w;
+}
+
+//get nth power of matrix F
+void power(int F[2][2], int n)
+{
+  int i;
+  int M[2][2] = {{1,1},{1,0}};
+
+  // n - 1 times multiply the matrix to {{1,0},{0,1}}
+  for (i = 2; i <= n; i++)
+      multiply(F, M);
+}
+
 
 //TESTS
 
@@ -90,6 +133,16 @@ TEST(FibTest, FibonacciTest)
 	EXPECT_EQ(3, calculateNthFibonacciNumber3(4));
 	EXPECT_EQ(5, calculateNthFibonacciNumber3(5));
 	EXPECT_EQ(701408733, calculateNthFibonacciNumber3(44));
+
+	//Tests for fourth Fibonacci implementation
+
+	EXPECT_EQ(0, calculateNthFibonacciNumber4(0));
+	EXPECT_EQ(1, calculateNthFibonacciNumber4(1));
+	EXPECT_EQ(1, calculateNthFibonacciNumber4(2));
+	EXPECT_EQ(2, calculateNthFibonacciNumber4(3));
+	EXPECT_EQ(3, calculateNthFibonacciNumber4(4));
+	EXPECT_EQ(5, calculateNthFibonacciNumber4(5));
+	EXPECT_EQ(701408733, calculateNthFibonacciNumber4(44));
 }
 
 
@@ -103,6 +156,7 @@ int main(int argc, char **argv)
 	std::cout << calculateNthFibonacciNumber3(7) << endl;
 	std::cout << calculateNthFibonacciNumber2(44) << endl;
 	std::cout << calculateNthFibonacciNumber3(44) << endl;
+	std::cout << calculateNthFibonacciNumber4(7) << endl;
 
 return RUN_ALL_TESTS();
 }
