@@ -1,7 +1,10 @@
 
 #include <iostream>
+#include <fstream>
 using namespace std;
 #include "gtest/gtest.h"
+
+char lookUp[150];
 
 int calculateNthFibonacciNumber1(int n)
 {
@@ -50,25 +53,6 @@ int calculateNthFibonacciNumber3(int n)
 	return b;
 }
 
-void power(int F[2][2], int n);
-
-//calculates the nth Fibonacci Number in O(n) because of usage of Matrix.
-
-int calculateNthFibonacciNumber4(int n)
-{
-  int F[2][2] = {{1,1},{1,0}};
-
-  if (n == 0)
-
-      return 0;
-
-  power(F, n-1);
-
-  return F[0][0];
-}
-
-//simple matrix multiplikation
-
 void multiply(int F[2][2], int M[2][2])
 {
   int x =  F[0][0]*M[0][0] + F[0][1]*M[1][0];
@@ -92,6 +76,22 @@ void power(int F[2][2], int n)
   for (i = 2; i <= n; i++)
       multiply(F, M);
 }
+
+
+int calculateNthFibonacciNumber4(int n)
+{
+  int F[2][2] = {{1,1},{1,0}};
+
+  if (n == 0)
+
+      return 0;
+
+  power(F, n-1);
+
+  return F[0][0];
+}
+
+//simple matrix multiplikation
 
 
 //calculates Nth Fibonacci Number in O(log n) time
@@ -120,8 +120,75 @@ int calculateNthFibonacciNumber5(int n)
 	}
 	return a + b;
 }
-//TESTS
 
+
+void buildLookUpTable()
+{
+
+	for(int i = 0; i <= 150; i++)
+	{
+		lookUp[i] = calculateNthFibonacciNumber5(i);
+	}
+
+	ofstream fout("lookup.txt");
+
+	if(fout.is_open())
+	{
+
+		for(int i = 0; i <= 150; i++)
+			{
+				fout << lookUp[i];
+			}
+	}
+	else
+	{
+		cout << "Files could not be opened" << endl;
+	}
+
+}
+void checkLookUp()
+{
+	ifstream f("lookUp.txt");
+	{
+		if(f.good())
+		{
+			f.close();
+		}
+		else
+		{
+			buildLookUpTable();
+		}
+	}
+}
+
+void readLookUpTable()
+{
+	int position = 0;
+	checkLookUp();
+	ifstream fin("lookup.txt");
+	if(fin.is_open())
+	{
+		while(!fin.eof() && position < 150)
+		{
+			fin.get(lookUp[position]);
+			position ++;
+		}
+	}
+	fin.close();
+}
+
+
+
+
+int calculateNthFibonacciNumber6(int n)
+{
+	checkLookUp();
+	int number = lookUp[n];
+	return number;
+}
+
+
+//TESTS
 
 TEST(FibTest, FibonacciTest)
 {
@@ -179,22 +246,36 @@ TEST(FibTest, FibonacciTest)
 	EXPECT_EQ(3, calculateNthFibonacciNumber5(4));
 	EXPECT_EQ(5, calculateNthFibonacciNumber5(5));
 	EXPECT_EQ(701408733, calculateNthFibonacciNumber5(44));
+
+	//Tests for sixth Fibonacci Implementation
+
+	EXPECT_EQ(0, calculateNthFibonacciNumber6(0));
+	EXPECT_EQ(1, calculateNthFibonacciNumber6(1));
+	EXPECT_EQ(1, calculateNthFibonacciNumber6(2));
+	EXPECT_EQ(2, calculateNthFibonacciNumber6(3));
+	EXPECT_EQ(3, calculateNthFibonacciNumber6(4));
+	EXPECT_EQ(5, calculateNthFibonacciNumber6(5));
+	EXPECT_EQ(701408733, calculateNthFibonacciNumber6(44));
+
 }
 
 
 int main(int argc, char **argv)
 {
-
+	readLookUpTable();
 	::testing::InitGoogleTest(&argc, argv);
 
-	std::cout << calculateNthFibonacciNumber1(7) << endl;
-	std::cout << calculateNthFibonacciNumber2(7) << endl;
-	std::cout << calculateNthFibonacciNumber3(7) << endl;
-	std::cout << calculateNthFibonacciNumber2(44) << endl;
-	std::cout << calculateNthFibonacciNumber3(44) << endl;
-	std::cout << calculateNthFibonacciNumber4(7) << endl;
-	std::cout << calculateNthFibonacciNumber5(7) << endl;
+	std::cout << calculateNthFibonacciNumber1(0) << endl;
+	std::cout << calculateNthFibonacciNumber2(1) << endl;
+	std::cout << calculateNthFibonacciNumber3(2) << endl;
+	std::cout << calculateNthFibonacciNumber2(3) << endl;
+	std::cout << calculateNthFibonacciNumber3(4) << endl;
+	std::cout << calculateNthFibonacciNumber4(5) << endl;
 
+	std::cout << calculateNthFibonacciNumber5(6) << endl;
+
+
+	cout << calculateNthFibonacciNumber6(7) << endl;
 
 return RUN_ALL_TESTS();
 }
