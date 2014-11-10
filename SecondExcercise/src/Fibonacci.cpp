@@ -1,7 +1,7 @@
 
 #include <iostream>
 using namespace std;
-#include <gtest/gtest.h>
+#include "gtest/gtest.h"
 
 int calculateNthFibonacciNumber1(int n)
 {
@@ -52,7 +52,7 @@ int calculateNthFibonacciNumber3(int n)
 
 void power(int F[2][2], int n);
 
-//calculates the nth Fibonacci Number in O(log n) because of usage of Matrix.
+//calculates the nth Fibonacci Number in O(n) because of usage of Matrix.
 
 int calculateNthFibonacciNumber4(int n)
 {
@@ -94,6 +94,32 @@ void power(int F[2][2], int n)
 }
 
 
+//calculates Nth Fibonacci Number in O(log n) time
+int calculateNthFibonacciNumber5(int n)
+{
+	int i = n - 1;
+	int a = 1;
+	int b = 0;
+	int c = 0;
+	int d = 1;
+	int t;
+	if(n <= 0) return 0;
+	while(i > 0)
+	{
+		while(i % 2 == 0)
+		{
+			t = d * (2 * c + d);
+			c = c * c + d * d;
+			d = t;
+			i = i / 2;
+		}
+		t = d * (b + a) + c * b;
+		a = d * b + c * a;
+		b = t;
+		i--;
+	}
+	return a + b;
+}
 //TESTS
 
 
@@ -143,6 +169,16 @@ TEST(FibTest, FibonacciTest)
 	EXPECT_EQ(3, calculateNthFibonacciNumber4(4));
 	EXPECT_EQ(5, calculateNthFibonacciNumber4(5));
 	EXPECT_EQ(701408733, calculateNthFibonacciNumber4(44));
+
+	//Tests for fifth Fibonacci implementation
+
+	EXPECT_EQ(0, calculateNthFibonacciNumber5(0));
+	EXPECT_EQ(1, calculateNthFibonacciNumber5(1));
+	EXPECT_EQ(1, calculateNthFibonacciNumber5(2));
+	EXPECT_EQ(2, calculateNthFibonacciNumber5(3));
+	EXPECT_EQ(3, calculateNthFibonacciNumber5(4));
+	EXPECT_EQ(5, calculateNthFibonacciNumber5(5));
+	EXPECT_EQ(701408733, calculateNthFibonacciNumber5(44));
 }
 
 
@@ -157,6 +193,8 @@ int main(int argc, char **argv)
 	std::cout << calculateNthFibonacciNumber2(44) << endl;
 	std::cout << calculateNthFibonacciNumber3(44) << endl;
 	std::cout << calculateNthFibonacciNumber4(7) << endl;
+	std::cout << calculateNthFibonacciNumber5(7) << endl;
+
 
 return RUN_ALL_TESTS();
 }
