@@ -1,23 +1,19 @@
-#makros
 CXX = g++
-SRC = src/*.cpp
-OBJECTS = $(SRC:.cpp=.o)
-CPPFLAGS = -Wall -O
-CXXFLAGS = -I/gtest-1.7.0/include/gtest
-EXE = Fibonacci
-CXXFLAGS = -Wall -O -I/usr/local/include
-LDFLAGS = /usr/lib/libgtest.a -pthread
+CXXFLAGS = -Wall -O -I/home/maximilian/gtest-1.7.0/include
+#LDFLAGS = -L/usr/lib/libgtest.a -pthread
+#LDFLAGS = -L/home/maximilian/gtest-1.7.0/lib/.libs/ -lgtest -pthread
+LDFLAGS = /home/maximilian/gtest-1.7.0/lib/.libs/libgtest.a -pthread
 SOURCES = src/Fibonacci.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = Fibonacci
 
 .PHONY: all
-all: tests
+all: build
 
-.PHONY: tests
-tests: $(OBJECTS)
+# builds algorithms
+.PHONY: build
+build: $(OBJECTS)
 	$(CXX) $(OBJECTS) $(LDFLAGS) $(CXXFLAGS) -o $(EXECUTABLE)
-	./$(EXECUTABLE)
 
 # Removes all objects and executables:
 .PHONY: clean
