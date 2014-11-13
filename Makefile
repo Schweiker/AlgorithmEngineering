@@ -1,3 +1,4 @@
+#makros
 CXX = g++
 CXXFLAGS = -Wall -O -I/home/maximilian/gtest-1.7.0/include
 #LDFLAGS = -L/usr/lib/libgtest.a -pthread
