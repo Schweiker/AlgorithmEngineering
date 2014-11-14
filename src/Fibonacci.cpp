@@ -1,9 +1,9 @@
-
 using namespace std;
 #include "gtest/gtest.h"
 #include <vector>
-#include <math.h>
+//#include <math.h>
 using namespace std;
+#include <cmath>
 
 vector<int> lookUp = vector<int>(100);
 
@@ -98,8 +98,10 @@ void power(int F[2][2], int n)
 }
 
 
+
 int calculateNthFibonacciNumber4(int n)
 {
+    //runs in O(log n) time needs constant space
     if(n < 0) return -1;
     if(n == 0) return 0;
     if(n == 1) return 1;
@@ -113,21 +115,22 @@ int calculateNthFibonacciNumber4(int n)
     return F[0][0];
 }
 
-//calculates Nth Fibonacci Number in O(log n) time
-int calculateNthFibonacciNumber5(int n)
+int calculateNthFibonacciNumber5(double n)
 {
+    //needs O(log n) time and constant space
 	if(n < 0) return -1;
 	if(n == 0) return 0;
 	if(n == 1) return 1;
 
-    //Formula from the lecture
-	int res = (int)floor((1/sqrt(5))*pow((1+sqrt(5))/2,n)-(1/2));
-	//dont know why, but for odd numbers it is 1 to small
-    if(n%2 == 1)return res + 1;
-	return res;
+    double result;
+    result = (pow(1 + sqrt(5.0),n) - pow(1 - sqrt(5.0),n)) / (pow(2,n) * sqrt(5.0));
+
+    //static const double phi = (1+sqrt(5))*0.5;
+    //double number = pow(1-phi,n)/sqrt(5);
+    return (int)result;
 }
 
-
+//lookup table needs constant time and needs O(1) time.
 int calculateNthFibonacciNumber6(int n)
 {
 	if(n < 0 || n > 40) return -1;
@@ -136,5 +139,3 @@ int calculateNthFibonacciNumber6(int n)
                             63245986, 102334155};
     return numbers[n];
 }
-
-

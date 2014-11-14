@@ -1,5 +1,6 @@
 #include "../src/Fibonacci.cpp"
-
+#include <stdlib.h>
+#include <iostream>
 //TESTS
 
 TEST(FibTestAlg1, FibonacciTest)
@@ -68,6 +69,7 @@ TEST(FibTestAlg5, FibonacciTest)
 	EXPECT_EQ(89, calculateNthFibonacciNumber5(11));
 	EXPECT_EQ(28657, calculateNthFibonacciNumber5(23));
 	EXPECT_EQ(5702887, calculateNthFibonacciNumber5(34));
+	EXPECT_EQ(433494437, calculateNthFibonacciNumber5(43));
 	//EXPECT_EQ(701408733, calculateNthFibonacciNumber5(44));
 }
 
@@ -94,12 +96,32 @@ TEST(FibonacciFailtest, FibonacciTest)
     EXPECT_EQ(2971215073, calculateNthFibonacciNumber5(47));
     EXPECT_EQ(2971215073, calculateNthFibonacciNumber6(47));
 }
+TEST(FibonacciRandomTest, FibonacciTest)
+//using random tests to better my tests using values in lookup table because these Fibonacci Numbers are always right
+{
+    //just numbers below 47 because of overflow
+    //not testing standard implementation because its too slow for large n
+    //not testint over 40 because of lookup table
+    srand(time(NULL));
+    for(int i = 0; i <= 10; i++)
+    {
+        int number = rand() % 40;
+        //gives out the Fibonaccinumbers that are to be tested
+        std::cout << number << endl;
+        //EXPECT_EQ(calculateNthFibonacciNumber6(number),calculateNthFibonacciNumber1(number));
+        //EXPECT_EQ(calculateNthFibonacciNumber6(number),calculateNthFibonacciNumber1(number));
+        EXPECT_EQ(calculateNthFibonacciNumber6(number),calculateNthFibonacciNumber2(number));
+        EXPECT_EQ(calculateNthFibonacciNumber6(number),calculateNthFibonacciNumber3(number));
+        EXPECT_EQ(calculateNthFibonacciNumber6(number),calculateNthFibonacciNumber4(number));
+        EXPECT_EQ(calculateNthFibonacciNumber6(number),calculateNthFibonacciNumber5(number));
+    }
+}
 
 
 int main(int argc, char **argv)
 {
 	::testing::InitGoogleTest(&argc, argv);
 
-return RUN_ALL_TESTS();
+    return RUN_ALL_TESTS();
 }
 
