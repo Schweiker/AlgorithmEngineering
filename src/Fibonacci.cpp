@@ -2,7 +2,6 @@ using namespace std;
 #include "gtest/gtest.h"
 #include <vector>
 //#include <math.h>
-using namespace std;
 #include <cmath>
 
 vector<int> lookUp = vector<int>(100);
@@ -115,15 +114,16 @@ int calculateNthFibonacciNumber4(int n)
     return F[0][0];
 }
 
-int calculateNthFibonacciNumber5(double n)
+int calculateNthFibonacciNumber5(int n)
 {
+    double ns = n;
     //needs O(log n) time and constant space
 	if(n < 0) return -1;
 	if(n == 0) return 0;
 	if(n == 1) return 1;
 
     double result;
-    result = (pow(1 + sqrt(5.0),n) - pow(1 - sqrt(5.0),n)) / (pow(2,n) * sqrt(5.0));
+    result = (pow(1 + sqrt(5.0),ns) - pow(1 - sqrt(5.0),ns)) / (pow(2,ns) * sqrt(5.0));
 
     //static const double phi = (1+sqrt(5))*0.5;
     //double number = pow(1-phi,n)/sqrt(5);

@@ -1,4 +1,4 @@
-//#include "../src/Fibonacci.cpp"
+#include "../src/Fibonacci.cpp"
 #include <stdlib.h>
 #include <iostream>
 //TESTS
