@@ -1,46 +1,46 @@
 #makros
-CXX = g++ -std=gnu++11
-CXXFLAGS = -Wall -O -I/home/maximilian/gtest-1.7.0/include
+CXX = g++
+CXXFLAGS = -std=c++0x -Wall -O -c
+CXXFLAGS_GTEST = -I/home/maximilian/gtest-1.7.0/include
 #LDFLAGS = -L/usr/lib/libgtest.a -pthread
 LDFLAGS = /home/maximilian/gtest-1.7.0/lib/.libs/libgtest.a -pthread
 
-SRC = src/Fibonacci.cpp
-MAINSRC = main/Fibonacci_main.cpp
-TESTSRC = test/Fibonacci_test.cpp
-METERSRC = test/Fibonacci_meter.cpp
+Fibonacci.o: src/Fibonacci.cpp includes/Fibonacci.h
+	$(CXX) $(CXXFLAGS) src/Fibonacci.cpp
 
-OBJECTS = $(patsubst %.cpp, %.o, $(SRC))
-MAINOBJECTS = $(patsubst %.cpp, %.o, $(MAINSRC))
-TESTOBJECTS = $(patsubst %.cpp, %.o, $(TESTSRC))
-METEROBJECTS = $(patsubst %.cpp, %.o, $(METERSRC))
+Fibonacci_test_main.o: Fibonacci_test_main.cpp
+	$(CXX) $(CXXFLAGS) $(CXXFLAGS_GTEST) Fibonacci_test_main.cpp
 
-MAINEXECUTABLE = Fibonacci_main
-TESTEXECUTABLE = Fibonacci_test
-METEREXECUTABLE = Fibonacci_meter
+Fibonacci_test: Fibonacci_test_main.o Fibonacci.o
+	$(CXX) -o Fibonacci_test Fibonacci_test_main.o Fibonacci.o $(LDFLAGS)
+	./Fibonacci_test
 
-.PHONY: all
-all: build
+tests: Fibonacci_test
 
-# builds pure algorithms
-.PHONY: build
-build: $(MAINOBJECTS)
-	$(CXX) $(MAINOBJECTS) $(CXXFLAGS) -o $(MAINEXECUTABLE)
-	./$(MAINEXECUTABLE)
+Fibonacci_main.o: Fibonacci_main.cpp
+	$(CXX) $(CXXFLAGS) Fibonacci_main.cpp
 
-#$(MAINOBJECTS): $(MAINSRC) $(SRC)
-#	$(CXX) $(MAINSRC) $(SRC) $(CXXFLAGS) -o $(MAINOBJECTS)
-.PHONY: meter
-meter: $(METEROBJECTS)
-	$(CXX) $(METEROBJECTS) $(CXXFLAGS) -o $(METEREXECUTABLE)
-	./$(METEREXECUTABLE)
+Fibonacci_main: Fibonacci_main.o Fibonacci.o
+	$(CXX) -o Fibonacci_main Fibonacci_main.o Fibonacci.o $(LDFLAGS)
+	./Fibonacci_main
 
-# build tests
-.PHONY: test
-test: $(TESTOBJECTS)
-	$(CXX) $(TESTOBJECTS) $(LDFLAGS) $(CXXFLAGS) -o $(TESTEXECUTABLE)
-	./$(TESTEXECUTABLE)
+main: Fibonacci_main
 
+Stopwatch.o: test/Stopwatch.cpp includes/Stopwatch.h
+	$(CXX) $(CXXFLAGS) test/Stopwatch.cpp
+
+Meter.o: test/Meter.cpp includes/Meter.h
+	$(CXX) $(CXXFLAGS) test/Meter.cpp
+
+Fibonacci_meter_main.o: Fibonacci_meter_main.cpp
+	$(CXX) $(CXXFLAGS) Fibonacci_meter_main.cpp
+
+Fibonacci_meter: Fibonacci_meter_main.o Fibonacci.o Meter.o Stopwatch.o
+	$(CXX) -o Fibonacci_meter Fibonacci_meter_main.o Fibonacci.o Meter.o Stopwatch.o $(LDFLAGS)
+	./Fibonacci_meter
+
+meter: Fibonacci_meter
 # Removes all objects and executables:
-.PHONY: clean
+
 clean:
-	rm -f $(OBJECTS) $(MAINOBJECTS) $(TESTOBJECTS) $(METEROBJECTS) $(MAINEXECUTABLE) $(TESTEXECUTABLE) $(METEREXECUTABLE)
+	rm -f *.o Fibonacci_main Fibonacci_test Fibonacci_meter

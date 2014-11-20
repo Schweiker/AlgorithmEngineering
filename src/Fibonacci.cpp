@@ -1,12 +1,13 @@
 using namespace std;
-#include "gtest/gtest.h"
 #include <vector>
 //#include <math.h>
 #include <cmath>
+#include <cstdint>
+#include "../includes/Fibonacci.h"
 
-vector<int> lookUp = vector<int>(100);
+using namespace std;
 
-int calculateNthFibonacciNumber1(int n)
+uint64_t Fibonacci::calculateNthFibonacciNumber1(uint32_t n)
 {
 	//standard implementation of fibonacci
 	//runs in exponential time and needs exponential space
@@ -21,24 +22,24 @@ int calculateNthFibonacciNumber1(int n)
 
 }
 
-int calculateNthFibonacciNumber2(int n)
+uint64_t Fibonacci::calculateNthFibonacciNumber2(uint32_t n)
 {
 	//Implementation of Fibonacci with an Array.
 	//It needs just linear Time and linear Space
     if(n < 0) return -1;
     if(n == 0) return 0;
     if(n == 1) return 1;
-	vector<int> numbers = vector<int>(n);
+	vector<uint64_t> numbers = vector<uint64_t>(n);
 	numbers[0] = 0;
 	numbers[1] = 1;
-	for(int i = 2; i < n;i++)
+	for(uint32_t i = 2; i < n;i++)
 	{
 		numbers[i] = numbers[i - 1] + numbers[i - 2];
 	}
 	return numbers[n - 1] + numbers[n - 2];
 }
 
-int calculateNthFibonacciNumber3(int n)
+uint64_t Fibonacci::calculateNthFibonacciNumber3(uint32_t n)
 {
     if(n < 0) return -1;
     if(n == 0) return 0;
@@ -48,12 +49,12 @@ int calculateNthFibonacciNumber3(int n)
     //defines a vector with 2 variables
     //first none holds FibonacciNumbers of even n
     //second one holds FibonacciNumbers of odd n
-    int twoNumbers[2];
+    uint64_t twoNumbers[2];
 
     twoNumbers[0] = 0;
     twoNumbers[1] = 1;
 
-    for(int i = 2;i < n;i++)
+    for(uint32_t i = 2;i < n;i++)
     {
         //when i is even -> update even Variable
         if(i % 2 == 0)
@@ -71,12 +72,12 @@ int calculateNthFibonacciNumber3(int n)
 
 }
 //simple matrix multiplikation
-void multiply(int F[2][2], int M[2][2])
+void multiply(uint64_t F[2][2], uint64_t M[2][2])
 {
-    int x =  F[0][0]*M[0][0] + F[0][1]*M[1][0];
-    int y =  F[0][0]*M[0][1] + F[0][1]*M[1][1];
-    int z =  F[1][0]*M[0][0] + F[1][1]*M[1][0];
-    int w =  F[1][0]*M[0][1] + F[1][1]*M[1][1];
+    uint64_t x =  F[0][0]*M[0][0] + F[0][1]*M[1][0];
+    uint64_t y =  F[0][0]*M[0][1] + F[0][1]*M[1][1];
+    uint64_t z =  F[1][0]*M[0][0] + F[1][1]*M[1][0];
+    uint64_t w =  F[1][0]*M[0][1] + F[1][1]*M[1][1];
 
     F[0][0] = x;
     F[0][1] = y;
@@ -85,11 +86,11 @@ void multiply(int F[2][2], int M[2][2])
 }
 
 //get nth power of matrix F
-void power(int F[2][2], int n)
+void power(uint64_t F[2][2], uint32_t n)
 {
-  int i;
+  uint32_t i;
 
-  int M[2][2] = {{1,1},{1,0}};
+  uint64_t M[2][2] = {{1,1},{1,0}};
 
   // n - 1 times multiply the matrix to {{1,0},{0,1}}
   for (i = 2; i <= n; i++)
@@ -98,14 +99,14 @@ void power(int F[2][2], int n)
 
 
 
-int calculateNthFibonacciNumber4(int n)
+uint64_t Fibonacci::calculateNthFibonacciNumber4(uint32_t n)
 {
     //runs in O(log n) time needs constant space
     if(n < 0) return -1;
     if(n == 0) return 0;
     if(n == 1) return 1;
 
-    int F[2][2] = {{1,1},{1,0}};
+    uint64_t F[2][2] = {{1,1},{1,0}};
 
     if (n == 0) return 0;
 
@@ -114,7 +115,7 @@ int calculateNthFibonacciNumber4(int n)
     return F[0][0];
 }
 
-int calculateNthFibonacciNumber5(int n)
+uint64_t Fibonacci::calculateNthFibonacciNumber5(uint32_t n)
 {
     double ns = n;
     //needs O(log n) time and constant space
@@ -127,14 +128,14 @@ int calculateNthFibonacciNumber5(int n)
 
     //static const double phi = (1+sqrt(5))*0.5;
     //double number = pow(1-phi,n)/sqrt(5);
-    return (int)result;
+    return (uint64_t)result;
 }
 
 //lookup table needs constant time and needs O(1) time.
-int calculateNthFibonacciNumber6(int n)
+uint64_t Fibonacci::calculateNthFibonacciNumber6(uint32_t n)
 {
 	if(n < 0 || n > 40) return -1;
-	int numbers[] = {0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368,
+	uint64_t numbers[] = {0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368,
                             75025, 121393, 196418, 317811, 514229, 832040, 1346269, 2178309, 3524578, 5702887, 9227465, 14930352, 24157817, 39088169,
                             63245986, 102334155};
     return numbers[n];
