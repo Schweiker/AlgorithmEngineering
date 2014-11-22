@@ -8,6 +8,7 @@
 class Fibonacci
 {
     public:
+
         static uint64_t calculateNthFibonacciNumber1(uint32_t n);
 
         static uint64_t calculateNthFibonacciNumber2(uint32_t n);
