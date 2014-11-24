@@ -1,0 +1,14 @@
+set title "PlotFibonacciAlgorithmsAfterTime"
+set xlabel "n"
+set ylabel "time in ms"
+set autoscale
+
+set terminal png size 1000,800
+set output 'FibonacciAlgorithmTime.png'
+
+plot    'FibAlg1_TIME_plot.txt' using 1:2 title 'FibonacciAlg1' with lines ls 1,\
+        'FibAlg2_TIME_plot.txt' using 1:2 title 'FibonacciAlg2' with lines ls 2,\
+        'FibAlg3_TIME_plot.txt' using 1:2 title 'FibonacciAlg3' with lines ls 3,\
+        'FibAlg4_TIME_plot.txt' using 1:2 title 'FibonacciAlg4' with lines ls 4,\
+        'FibAlg5_TIME_plot.txt' using 1:2 title 'FibonacciAlg5' with lines ls 5,\
+        'FibAlg6_TIME_plot.txt' using 1:2 title 'FibonacciAlg6' with lines ls 6,\

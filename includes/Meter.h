@@ -23,8 +23,10 @@ class Meter
 {
     Stopwatch w;
 
-    const char* filenameData;
+    const char* filenameTime;
     const char* filenameCycle;
+    const char* filenamePlotTime;
+    const char* filenamePlotCycle;
 
     vector<uint64_t> t_measures;
     vector<uint64_t> c_measures;
@@ -47,7 +49,7 @@ class Meter
 
         //const char* filename;
 
-        Meter(const char* fileData,const char* FileCycle);
+        Meter(const char* fileData,const char* FileCycle,const char* filePlotCycle,const char* filePlotTime);
 
         void measure(uint32_t numOfTest, uint64_t(*f)(uint32_t), uint32_t valueToTest);
 
@@ -60,6 +62,8 @@ class Meter
 
         void printDataTime(const char* casename);
         void printDataCycle(const char* casename);
+        void printDataToPlotTime(const char* casename);
+        void printDataToPlotCycle(const char* casename);
 };
 
 #endif

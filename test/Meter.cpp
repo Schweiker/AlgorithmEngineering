@@ -1,8 +1,11 @@
 #include "../includes/Meter.h"
-Meter::Meter(const char* fileData ="measurements.txt", const char* fileCycle="measurements2.txt")
+Meter::Meter(const char* fileData ="measurements.txt", const char* fileCycle="measurements2.txt"
+            ,const char* filePlotCycle="measurements3.txt",const char* filePlotTime="measurements4.txt")
 {
-    filenameData = fileData;
+    filenameTime = fileData;
     filenameCycle = fileCycle;
+    filenamePlotTime = filePlotTime;
+    filenamePlotCycle = filePlotCycle;
 
     initfileData();
     initfileCycle();
@@ -71,7 +74,7 @@ void Meter::measureAlgorithmCycles(uint32_t numOfTest, uint64_t(*f)(uint32_t), u
     uint64_t c_start, c_end, c_diff;
     unsigned cycles_low, cycles_high, cycles_low1, cycles_high1;
     //disable preemption
-   // preempt_disable();
+    //preempt_disable();
     //disable hard interrupts
     //raw_local_irq_save(flags);
 
@@ -139,9 +142,9 @@ void Meter::measureAlgorithmCycles(uint32_t numOfTest, uint64_t(*f)(uint32_t), u
 
 void Meter::initfileData()
 {
-    remove(filenameData);
+    remove(filenameTime);
     fstream file;
-    file.open (filenameData, fstream::out | fstream::app);
+    file.open (filenameTime, fstream::out | fstream::app);
 
     file << "#Tests:        Minimum(µs):        Maximum(µs):         Mean(µs):         deviation(µs):\n";
     file << "----------------------------------------------------------------------------------------\n";
@@ -162,7 +165,7 @@ void Meter::initfileCycle()
 void Meter::printDataTime(const char* casename)
 {
     fstream file;
-    file.open(filenameData, fstream::out | fstream::app);
+    file.open(filenameTime, fstream::out | fstream::app);
     file << std::setw(13) << numberOfTests
          << std::setw(13) << t_min
          << std::setw(13) << t_max
@@ -180,5 +183,20 @@ void Meter::printDataCycle(const char* casename)
          << std::setw(13) << c_max
          << std::setw(13) << c_mean
          << std::setprecision(3) << std::fixed << std::setw(30) << c_standardDeviation << "\n";
+    file.close();
+}
+void Meter::printDataToPlotTime(const char* casename)
+{
+    fstream file;
+    file.open(filenamePlotTime, fstream::out | fstream::app);
+    file << t_min << " " << t_max << " " << t_mean << " " << t_standardDeviation << "\n";
+    file.close();
+}
+
+void Meter::printDataToPlotCycle(const char* casename)
+{
+    fstream file;
+    file.open(filenamePlotCycle, fstream::out | fstream::app);
+    file << c_min << " " << c_max << " " << c_mean << " " << c_standardDeviation << "\n";
     file.close();
 }

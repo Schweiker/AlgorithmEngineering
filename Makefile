@@ -1,6 +1,7 @@
 #makros
 CXX = g++
-CXXFLAGS = -std=c++0x -Wall -O -c -I/usr/src/linux-headers-3.13.0-32/include/asm-generic
+CXXFLAGS = -std=c++0x -Wall -O -c
+#-I/usr/src/linux-headers-3.13.0-32/include/asm-generic
 CXXFLAGS_GTEST = -I/home/maximilian/gtest-1.7.0/include
 #LDFLAGS = -L/usr/lib/libgtest.a -pthread
 LDFLAGS = /home/maximilian/gtest-1.7.0/lib/.libs/libgtest.a -pthread
@@ -59,10 +60,19 @@ Fibonacci_meter: Fibonacci_meter.o Fibonacci.o Meter.o Stopwatch.o
 	./Fibonacci_meter
 
 meter: Fibonacci_meter
+
+plotfib:
+	gnuplot 'plotfibtime'
+	gnuplot 'plotfibcycles'
+
+
 # Removes all objects and executables:
 
 cleantxt:
 	rm -f *.txt
+
+cleanplot:
+	rm -f *.png
 
 clean:
 	rm -f *.o Fibonacci_main Fibonacci_gtest Fibonacci_meter Sorting_main
