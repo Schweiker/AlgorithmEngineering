@@ -62,8 +62,8 @@ class Meter
 
         void printDataTime(const char* casename);
         void printDataCycle(const char* casename);
-        void printDataToPlotTime(const char* casename);
-        void printDataToPlotCycle(const char* casename);
+        void printDataToPlotTime(const char* casename,int n);
+        void printDataToPlotCycle(const char* casename, int n);
 };
 
 #endif

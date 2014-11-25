@@ -1,69 +1,74 @@
 #makros
 CXX = g++
 CXXFLAGS = -std=c++0x -Wall -O -c
+FLAGSFOROBJECTS = -o $@
 #-I/usr/src/linux-headers-3.13.0-32/include/asm-generic
 CXXFLAGS_GTEST = -I/home/maximilian/gtest-1.7.0/include
 #LDFLAGS = -L/usr/lib/libgtest.a -pthread
 LDFLAGS = /home/maximilian/gtest-1.7.0/lib/.libs/libgtest.a -pthread
+OBJECTS = objects/
+MAINS = main/
 
 #sources
 
-Fibonacci.o: src/Fibonacci.cpp includes/Fibonacci.h
-	$(CXX) $(CXXFLAGS) src/Fibonacci.cpp
+$(OBJECTS)Fibonacci.o: src/Fibonacci.cpp includes/Fibonacci.h
+	$(CXX) $(CXXFLAGS) src/Fibonacci.cpp $(FLAGSFOROBJECTS)
 
-Sorting.o: src/Sorting.cpp includes/Sorting.h
-	$(CXX) $(CXXFLAGS) src/Sorting.cpp
+$(OBJECTS)Sorting.o: src/Sorting.cpp includes/Sorting.h
+	$(CXX) $(CXXFLAGS) src/Sorting.cpp $(FLAGSFOROBJECTS)
 
 #tests
 
-Fibonacci_gtest.o: main/Fibonacci_gtest.cpp
-	$(CXX) $(CXXFLAGS) $(CXXFLAGS_GTEST) main/Fibonacci_gtest.cpp
+$(OBJECTS)Fibonacci_gtest.o: $(MAINS)Fibonacci_gtest.cpp
+	$(CXX) $(CXXFLAGS) $(CXXFLAGS_GTEST) $(MAINS)Fibonacci_gtest.cpp $(FLAGSFOROBJECTS)
 
-Fibonacci_gtest: Fibonacci_gtest.o Fibonacci.o
-	$(CXX) -o Fibonacci_gtest Fibonacci_gtest.o Fibonacci.o $(LDFLAGS)
+Fibonacci_gtest: $(OBJECTS)Fibonacci_gtest.o $(OBJECTS)Fibonacci.o
+	$(CXX) -o Fibonacci_gtest $(OBJECTS)Fibonacci_gtest.o $(OBJECTS)Fibonacci.o $(LDFLAGS)
 	./Fibonacci_gtest
 
 tests: Fibonacci_gtest
 
 #main
-Sorting_main.o: Sorting_main.cpp
-	$(CXX) $(CXXFLAGS) Sorting_main.cpp
+$(OBJECTS)Sorting_main.o: $(MAINS)Sorting_main.cpp
+	$(CXX) $(CXXFLAGS) $(MAINS)Sorting_main.cpp $(FLAGSFOROBJECTS)
 
-Sorting_main: Sorting.o Sorting_main.o
-	$(CXX) -o Sorting_main Sorting_main.o Sorting.o $(LDFLAGS)
+Sorting_main: $(OBJECTS)Sorting.o $(OBJECTS)Sorting_main.o
+	$(CXX) -o Sorting_main $(OBJECTS)Sorting_main.o $(OBJECTS)Sorting.o $(LDFLAGS)
 	./Sorting_main
 
 sortmain: Sorting_main
 
-Fibonacci_main.o: main/Fibonacci_main.cpp
-	$(CXX) $(CXXFLAGS) main/Fibonacci_main.cpp
+$(OBJECTS)Fibonacci_main.o: $(MAINS)Fibonacci_main.cpp
+	$(CXX) $(CXXFLAGS) $(MAINS)Fibonacci_main.cpp $(FLAGSFOROBJECTS)
 
-Fibonacci_main: Fibonacci_main.o Fibonacci.o
-	$(CXX) -o Fibonacci_main Fibonacci_main.o Fibonacci.o $(LDFLAGS)
+Fibonacci_main: $(OBJECTS)Fibonacci_main.o $(OBJECTS)Fibonacci.o
+	$(CXX) -o Fibonacci_main $(OBJECTS)Fibonacci_main.o $(OBJECTS)Fibonacci.o $(LDFLAGS)
 	./Fibonacci_main
 
 fibmain: Fibonacci_main
 
 # meter objects
 
-Stopwatch.o: test/Stopwatch.cpp includes/Stopwatch.h
-	$(CXX) $(CXXFLAGS) test/Stopwatch.cpp
+$(OBJECTS)Stopwatch.o: test/Stopwatch.cpp includes/Stopwatch.h
+	$(CXX) $(CXXFLAGS) test/Stopwatch.cpp $(FLAGSFOROBJECTS)
 
-Meter.o: test/Meter.cpp includes/Meter.h
-	$(CXX) $(CXXFLAGS) test/Meter.cpp
+$(OBJECTS)Meter.o: test/Meter.cpp includes/Meter.h
+	$(CXX) $(CXXFLAGS) test/Meter.cpp $(FLAGSFOROBJECTS)
 
-Fibonacci_meter.o: Fibonacci_meter.cpp
-	$(CXX) $(CXXFLAGS) Fibonacci_meter.cpp
+$(OBJECTS)Fibonacci_meter.o: $(MAINS)Fibonacci_meter.cpp
+	$(CXX) $(CXXFLAGS) $(MAINS)Fibonacci_meter.cpp $(FLAGSFOROBJECTS)
 
-Fibonacci_meter: Fibonacci_meter.o Fibonacci.o Meter.o Stopwatch.o
-	$(CXX) -o Fibonacci_meter Fibonacci_meter.o Fibonacci.o Meter.o Stopwatch.o $(LDFLAGS)
+Fibonacci_meter: $(OBJECTS)Fibonacci_meter.o $(OBJECTS)Fibonacci.o $(OBJECTS)Meter.o $(OBJECTS)Stopwatch.o
+	$(CXX) -o Fibonacci_meter $(OBJECTS)Fibonacci_meter.o $(OBJECTS)Fibonacci.o $(OBJECTS)Meter.o $(OBJECTS)Stopwatch.o $(LDFLAGS)
 	./Fibonacci_meter
 
 meter: Fibonacci_meter
 
 plotfib:
-	gnuplot 'plotfibtime'
-	gnuplot 'plotfibcycles'
+	gnuplot 'plots/plotfibtime'
+	gnuplot 'plots/plotfibcycles'
+
+fibplot: meter plotfib
 
 
 # Removes all objects and executables:
@@ -75,5 +80,7 @@ cleanplot:
 	rm -f *.png
 
 clean:
-	rm -f *.o Fibonacci_main Fibonacci_gtest Fibonacci_meter Sorting_main
+	rm -f objects/*.o Fibonacci_main Fibonacci_gtest Fibonacci_meter Sorting_main
 	reset
+
+cleanall: cleantxt cleanplot clean

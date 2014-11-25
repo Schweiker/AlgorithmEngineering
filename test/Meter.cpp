@@ -185,18 +185,18 @@ void Meter::printDataCycle(const char* casename)
          << std::setprecision(3) << std::fixed << std::setw(30) << c_standardDeviation << "\n";
     file.close();
 }
-void Meter::printDataToPlotTime(const char* casename)
+void Meter::printDataToPlotTime(const char* casename, int n)
 {
     fstream file;
     file.open(filenamePlotTime, fstream::out | fstream::app);
-    file << t_min << " " << t_max << " " << t_mean << " " << t_standardDeviation << "\n";
+    file << n << " " << t_mean << "\n";
     file.close();
 }
 
-void Meter::printDataToPlotCycle(const char* casename)
+void Meter::printDataToPlotCycle(const char* casename, int n)
 {
     fstream file;
     file.open(filenamePlotCycle, fstream::out | fstream::app);
-    file << c_min << " " << c_max << " " << c_mean << " " << c_standardDeviation << "\n";
+    file << n << " "<< c_mean << "\n";
     file.close();
 }

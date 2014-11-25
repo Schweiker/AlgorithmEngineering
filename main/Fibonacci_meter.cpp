@@ -1,5 +1,5 @@
-#include "includes/Meter.h"
-#include "includes/Fibonacci.h"
+#include "../includes/Meter.h"
+#include "../includes/Fibonacci.h"
 #include <iostream>
 int main ()
 {
@@ -18,8 +18,8 @@ int main ()
         mAlg1.measure(numberOfTest, *Fibonacci::calculateNthFibonacciNumber1, i);
         mAlg1.printDataTime(AlgName);
         mAlg1.printDataCycle(AlgName);
-        mAlg1.printDataToPlotTime(AlgName);
-        mAlg1.printDataToPlotCycle(AlgName);
+        mAlg1.printDataToPlotTime(AlgName, i);
+        mAlg1.printDataToPlotCycle(AlgName, i);
 
     }
 
@@ -37,8 +37,8 @@ int main ()
         mAlg2.measure(numberOfTest, *Fibonacci::calculateNthFibonacciNumber2, i);
         mAlg2.printDataTime(AlgName);
         mAlg2.printDataCycle(AlgName);
-        mAlg2.printDataToPlotTime(AlgName);
-        mAlg2.printDataToPlotCycle(AlgName);
+        mAlg2.printDataToPlotTime(AlgName, i);
+        mAlg2.printDataToPlotCycle(AlgName, i);
     }
 
     std::cout << "Finished measure for second Implementation \n"
@@ -51,8 +51,8 @@ int main ()
         mAlg3.measure(numberOfTest, *Fibonacci::calculateNthFibonacciNumber3, i);
         mAlg3.printDataTime(AlgName);
         mAlg3.printDataCycle(AlgName);
-        mAlg3.printDataToPlotTime(AlgName);
-        mAlg3.printDataToPlotCycle(AlgName);
+        mAlg3.printDataToPlotTime(AlgName, i);
+        mAlg3.printDataToPlotCycle(AlgName, i);
     }
 
     std::cout << "Finished measure for third Implementation \n"
@@ -65,8 +65,8 @@ int main ()
         mAlg4.measure(numberOfTest, *Fibonacci::calculateNthFibonacciNumber4, i);
         mAlg4.printDataTime(AlgName);
         mAlg4.printDataCycle(AlgName);
-        mAlg4.printDataToPlotTime(AlgName);
-        mAlg4.printDataToPlotCycle(AlgName);
+        mAlg4.printDataToPlotTime(AlgName, i);
+        mAlg4.printDataToPlotCycle(AlgName, i);
     }
 
     std::cout << "Finished measure for fourth Implementation \n"
@@ -79,8 +79,8 @@ int main ()
         mAlg5.measure(numberOfTest, *Fibonacci::calculateNthFibonacciNumber5, i);
         mAlg5.printDataTime(AlgName);
         mAlg5.printDataCycle(AlgName);
-        mAlg5.printDataToPlotTime(AlgName);
-        mAlg5.printDataToPlotCycle(AlgName);
+        mAlg5.printDataToPlotTime(AlgName, i);
+        mAlg5.printDataToPlotCycle(AlgName, i);
     }
 
     std::cout << "Finished measure for fifth Implementation \n"
@@ -93,8 +93,8 @@ int main ()
         mAlg6.measure(numberOfTest, *Fibonacci::calculateNthFibonacciNumber6, i);
         mAlg6.printDataTime(AlgName);
         mAlg6.printDataCycle(AlgName);
-        mAlg6.printDataToPlotTime(AlgName);
-        mAlg6.printDataToPlotCycle(AlgName);
+        mAlg6.printDataToPlotTime(AlgName, i);
+        mAlg6.printDataToPlotCycle(AlgName, i);
     }
 
     std::cout << "Finished measure for sixth Implementation \n"

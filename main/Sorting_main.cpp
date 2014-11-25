@@ -1,4 +1,4 @@
-#include "includes/Sorting.h"
+#include "../includes/Sorting.h"
 #include <iostream>
 #include <stdlib.h>
 
