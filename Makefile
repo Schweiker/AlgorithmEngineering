@@ -28,11 +28,11 @@ Fibonacci_gtest: $(OBJECTS)Fibonacci_gtest.o $(OBJECTS)Fibonacci.o
 
 tests: Fibonacci_gtest
 
-#main
+#mains
 $(OBJECTS)Sorting_main.o: $(MAINS)Sorting_main.cpp
 	$(CXX) $(CXXFLAGS) $(MAINS)Sorting_main.cpp $(FLAGSFOROBJECTS)
 
-Sorting_main: $(OBJECTS)Sorting.o $(OBJECTS)Sorting_main.o
+Sorting_main: $(OBJECTS)Sorting_main.o $(OBJECTS)Sorting.o
 	$(CXX) -o Sorting_main $(OBJECTS)Sorting_main.o $(OBJECTS)Sorting.o $(LDFLAGS)
 	./Sorting_main
 

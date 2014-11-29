@@ -3,20 +3,22 @@
 
 #include <vector>
 #include <iostream>
-
+#include <typeinfo>
 
 using namespace std;
-
 class Sorting
 {
 
     public:
 
-        static void insertionSort(vector<int64_t> &toSort, int n);
-
-        static void quickSort(vector<int64_t> &toSort, int left, int right);
-
-        static void printOut(vector<int64_t> &toPrint, int n);
+        template <typename T>
+        static void insertionSort(vector<T> &toSort);
+        template <typename T>
+        static void quickSort(vector<T> &toSort,int left, int right);
+        template <typename T>
+        static bool isSorted(T a, T b);
+        template <typename T>
+        static void printOut(vector<T> &toPrint);
 };
 
 

@@ -101,7 +101,7 @@ void power(uint64_t F[2][2], uint32_t n)
 
 uint64_t Fibonacci::calculateNthFibonacciNumber4(uint32_t n)
 {
-    //runs in O(log n) time needs constant space
+
     if(n < 0) return -1;
     if(n == 0) return 0;
     if(n == 1) return 1;
