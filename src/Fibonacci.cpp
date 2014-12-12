@@ -3,7 +3,7 @@ using namespace std;
 //#include <math.h>
 #include <cmath>
 #include <cstdint>
-#include "../includes/Fibonacci.h"
+#include <Fibonacci.h>
 
 using namespace std;
 

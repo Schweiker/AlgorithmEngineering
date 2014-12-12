@@ -1,6 +1,6 @@
 set title "PlotFibonacciAlgorithmsAfterTime"
 set xlabel "n"
-set ylabel "time in ms"
+set ylabel "time in ns"
 set autoscale
 
 set terminal png size 1000,800

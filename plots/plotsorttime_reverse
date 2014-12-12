@@ -1,0 +1,12 @@
+set title "PlotSortAlgorithmsAfterTimeWithReversedSortedInput"
+set xlabel "n"
+set ylabel "time in ns"
+set autoscale
+
+set terminal png size 1000,800
+set output 'SortingAlgorithmTimeReverse.png'
+
+plot    'InsertionSort_Time_Plot_Reverse.txt' using 1:2 title 'InsertionSort' with lines ls 1,\
+        'QuickSort_Time_Plot_Reverse.txt' using 1:2 title 'QuickSort' with lines ls 2,\
+        'MergeSort_Time_Plot_Reverse.txt' using 1:2 title 'MergeSort' with lines ls 3,\
+
