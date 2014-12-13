@@ -10,7 +10,7 @@ int main()
     cout << "Start to Measure Sorting Algorithms!" <<endl;
 
     vector<int> test;
-    uint32_t numberoftest = 10000;
+    uint32_t numberoftest = 500;
     //int lengthOfTestVector = 0;
     //vector<int> test(lengthOfTestVector,0);
 

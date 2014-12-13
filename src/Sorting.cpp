@@ -18,11 +18,11 @@ void Sorting::insertionSort(vector<T> &toSort)
         element = toSort[i];
         //cout << element << endl;
 
-        for(j = i - 1; j >= 0 && toSort[j] >= element; j--)
-        {
-            //cout << "shuffing elements" << endl;
-            toSort[j + 1] = toSort[j];
-        }
+            for(j = i - 1; j >= 0 && toSort[j] >= element; j--)
+            {
+                //cout << "shuffing elements" << endl;
+                toSort[j + 1] = toSort[j];
+            }
         //printOut(toSort,lengthOfToSort);
         toSort[j + 1] = element;
         }
@@ -33,149 +33,99 @@ void Sorting::insertionSort(vector<T> &toSort)
 template <typename T>
 void Sorting::quickSort(vector<T> &toSort)
 {
-    T length = toSort.size() - 1;
-    quickSorthelp(toSort,0, length);
-}
-/*
-template <typename T>
-T Sorting::getMedian(vector<T> &toCheck)
-{
-    cout << "getting median" << endl;
-    T length = toCheck.size() - 1;
-    T median = toCheck.size()/2;
-    cout << median << endl;
-    median = selectkth(toCheck,0,length,median);
-    return median;
-}
-
-//gets the kth element -> array.size() / 2 gets median
-//takes O(n)
-template <typename T>
-T Sorting::selectkth(vector<T> &toCheck, T p, T r, T k)
-{
-    cout << "select kth" << endl;
-    if(p == r)
+    T ends = toSort.size() - 1;
+    if(toSort.size() < 40)
     {
-        return p;
+        insertionSort(toSort);
     }
     else
     {
-    cout << p << " < | > " << r << endl;
-    cout << "partition call in selectkth" << endl;
-    T j = partition_quickSort(toCheck,p,r);
-    cout << "length : " << j << endl;
-    T length = j - p + 1;
-    cout << "length : " << length<< endl;
-    if(length == k) return j;
-    else if(k < length) return selectkth(toCheck,p,j-1,k);
-    else return selectkth(toCheck,j + 1, r, k-length);
+        //cout << "index ends of toSort : " << ends << endl;
+        quickSortHelp(toSort,0,ends);
     }
 
 }
-*/
-/*
-template <typename T>
-T Sorting::partition_quickSort(vector<T> &toSort, T p, T r)
-{
-    cout << "partition" << endl;
-    Sorting::printOut(toSort);
-    std::nth_element(toSort.begin(),toSort.begin() + toSort.size()/2, toSort.end());
-    Sorting::printOut(toSort);
-    //T median = toSort[toSort.size()/2];
-    cout << "median : " << median << endl;
 
-    while(p < r)
+template <typename T>
+void Sorting::quickSortHelp(vector<T> &toSort, int beginning, int end)
+{
+    if(end-beginning >= 1)
     {
-        cout << "p = " << p << endl;
-        cout << "toSort[p] = " << toSort[p] << endl;
-        cout << "r = " << r << endl;
-        cout << "toSort[r] = " << toSort[r] << endl;
-
-        while(toSort[p] < median)
-        {
-            cout << "while 1" << endl;
-            p = p + 1;
-            cout << "p : " << p << endl;
-        }
-        while(toSort[r] > median)
-        {
-            cout << "while 2" << endl;
-            r = r - 1;
-            cout << "r : " << p << endl;
-        }
-        if(toSort[p] == toSort[r])
-        {
-            cout << "if" << endl;
-            p = p + 1;
-            cout << "p : " << p << endl;
-        }
-        else if(p < r)
-        {
-            cout << "else if" << endl;
-            T tmp = toSort[p];
-            toSort[p] = toSort[r];
-            toSort[r] = tmp;
-        }
+        int partition = qs_partition(toSort,beginning,end);
+        //cout << "partition is : " << partition << endl;
+        //cout << "beginning : " << beginning << " end : " << end << endl;
+        quickSortHelp(toSort,beginning,partition-1);
+        quickSortHelp(toSort,partition + 1,end);
     }
-    cout << "r : " <<r << endl;
-    return r;
-}
-*/
-
-template <typename T>
-void Sorting::quickSorthelp(vector<T> &toSort, T start, T ends)
-{
-    T q = ends -start;
-    if(q < 2) return;
-    q = medianOfThreePartition(toSort,start,ends);
-    quickSorthelp(toSort,start,q - 1);
-    quickSorthelp(toSort,q + 1,ends);
 }
 
 template <typename T>
-T Sorting::medianOfThreePartition(vector<T> &toSort,T p,T r)
+int Sorting::qs_partition(vector<T> &toSort,int beginning,int end)
 {
-    T counts;
-    T x = toSort[p];
-    T y = toSort[(r - p)/2+p];
-    T z = toSort[r];
-    T i = p - 1;
-    T j = r;
-
-    cout << "x : " << x << " y : " << y << " z : " << z << "i : " << i << " toSort[i]: " << toSort[i] << " j" << j << "toSort[j]" <<toSort[j] << endl;
-
-    if((y > x && y < z) || (y > z && y < x))
+    T pivot = medianOfThree(toSort,beginning,end);
+    //cout << "pivot : " << pivot << endl;
+    int left = beginning - 1;
+    int right = end - 1 + 1; // - 1 for swap in medianofthree;
+    for(;;)
     {
-        x = y;
-    }
-    else if((z > x && z < y) || (z > y && z < x))
-    {
-        x = z;
-    }
-    while(1)
-    {
-        //cout << "loop mofuckers" << endl;
-        cout << toSort[i] << " : " << toSort[j] << endl;
-        while(toSort[j] >= x)
+        //left = left + 1;
+        while(toSort[left] < pivot && left < end)
         {
-            j--;
-            counts++;
+            left = left + 1;
         }
-        while(toSort[i] < x)
+        //right = right - 1;
+        while(toSort[right] > pivot && right > beginning)
         {
-            i++;
-            counts++;
+            right = right - 1;
         }
-        if(i < j && toSort[i] != toSort[j])
+        if(right > left)
         {
-            swap(toSort,i,j);
+            swap(toSort,left,right);
+            if(toSort[left] == toSort[right])
+            {
+                left = left + 1;
+            }
         }
         else
         {
-             return j+1;
+            return left;
         }
+
     }
 }
+
+template <typename T>
+T Sorting::medianOfThree(vector<T> &toLook,int left,int right)
+//returns the median out of three positions(beginning, end , and middle) of the array
+{
+   int middle = (left + right) / 2;
+
+    if(toLook[left] > toLook[middle])
+    {
+        swap(toLook,left,middle);
+    }
+    if(toLook[left] > toLook[right])
+    {
+        swap(toLook,left,right);
+    }
+    if(toLook[middle] > toLook[right])
+    {
+        swap(toLook,middle,right);
+    }
+    swap(toLook,middle,right-1);
+    return toLook[right-1];
+}
+
+template <typename T>
+T Sorting::median(vector<T> &a, int begs, int ends)
+{
+    //returns element that is the median in array a
+    //takes linear time -> nth element takes linear time
+    int midIndex = (ends + begs) / 2;
+    nth_element(a.begin()+begs,a.begin() + midIndex,a.begin()+ends);
+    return a[midIndex];
+}
+
 template <typename T>
 void Sorting::merges(vector<T> &toSort, T low, T high, T mid)
 {
@@ -222,18 +172,26 @@ template <typename T>
 void Sorting::mergeSort(vector<T> &toSort)
 {
     T length = toSort.size() - 1;
-    mergeSorthelp(toSort,0,length);
+    if(toSort.size() < 40)
+    {
+        insertionSort(toSort);
+    }
+    else
+    {
+        mergeSortHelp(toSort,0,length);
+    }
+
 }
 
 template <typename T>
-void Sorting::mergeSorthelp(vector<T> &toSort, T low, T high)
+void Sorting::mergeSortHelp(vector<T> &toSort, T low, T high)
 {
     T mid;
     if(low < high)
     {
         mid = (low+high) / 2;
-        mergeSorthelp(toSort,low,mid);
-        mergeSorthelp(toSort,mid+1,high);
+        mergeSortHelp(toSort,low,mid);
+        mergeSortHelp(toSort,mid+1,high);
         merges(toSort,low,high,mid);
     }
     return;
@@ -348,9 +306,17 @@ void Sorting::addRepeatedNumber(vector<T> &toFill)
 template <typename T>
 void Sorting::swap(vector<T> &toWork,int i,int j)
 {
+    if(i == j || toWork[i] ==  toWork[j])
+    {
+    }
+    else
+    {
+        //cout << "Swapping : " << toWork[i] << " : " << toWork[j] << endl;
         T tmp = toWork[i];
         toWork[i] = toWork[j];
         toWork[j] = tmp;
+        //Sorting::printOut(toWork);
+    }
 }
 /*
 void Sorting::init()
@@ -370,10 +336,12 @@ void Sorting::init()
 */
 //template class Sorting<int>;
 template void Sorting::swap<int>(vector<int>&,int,int);
+template int Sorting::median<int>(vector<int>&,int,int);
+template int Sorting::qs_partition<int>(vector<int>&,int,int);
 
 template void Sorting::addRandomNumbers<int>(vector<int>&);
 template void Sorting::addPermutedNumbers<int>(vector<int>&);
-template void Sorting::addRepeatedNumber<int>(vector<int> &);
+template void Sorting::addRepeatedNumber<int>(vector<int>&);
 template void Sorting::addReverseSortedNumbers<int>(vector<int>&);
 template void Sorting::addSortedNumbers<int>(vector<int>&);
 template bool Sorting::isSorted<int>(vector<int>&);

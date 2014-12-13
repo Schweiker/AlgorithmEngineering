@@ -67,6 +67,28 @@ void Meter::CycleStats()
     }
 }
 
+string Meter::measuresToStringTime()
+{
+    string measures = "";
+    for(uint32_t i = 0; i < t_measures.size();i++)
+    {
+        measures += " " + to_string(t_measures[i]);
+
+    }
+    return measures;
+}
+
+string Meter::measuresToStringCycle()
+{
+    string measures = "";
+    for(uint32_t i = 0; i < t_measures.size();i++)
+    {
+        measures += " " + to_string(c_measures[i]);
+
+    }
+    return measures;
+}
+
 
 void Meter::initfileData()
 {
@@ -84,8 +106,8 @@ void Meter::initfileCycle()
     fstream file;
     file.open (filenameCycle, fstream::out | fstream::app);
 
-    file << "#Tests:        Minimum(µs):        Maximum(µs):         Mean(µs):         deviation(µs):\n";
-    file << "----------------------------------------------------------------------------------------\n";
+    file << "#Tests:        Minimum(µs):        Maximum(µs):         Mean(µs):         deviation(µs):                           measures(µs)\n";
+    file << "-------------------------------------------------------------------------------------------------------------------------------\n";
     file.close();
 }
 
@@ -98,6 +120,7 @@ void Meter::printDataTime(const char* casename)
          << std::setw(13) << t_min
          << std::setw(13) << t_max
          << std::setw(13) << t_mean
+         << std::setw(26) << measuresToStringTime()
          << std::setprecision(3) << std::fixed << std::setw(30) << t_standardDeviation << "\n";
     file.close();
 }
@@ -110,6 +133,7 @@ void Meter::printDataCycle(const char* casename)
          << std::setw(13) << c_min
          << std::setw(13) << c_max
          << std::setw(13) << c_mean
+         << std::setw(26) << measuresToStringCycle()
          << std::setprecision(3) << std::fixed << std::setw(30) << c_standardDeviation << "\n";
     file.close();
 }

@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <string>
 
 #include "Stopwatch.h"
 
@@ -52,6 +53,9 @@ class Meter
 
         template<typename RT,typename PT,typename PT2>
         void measureAlgorithmCycles(uint32_t numOfTest, RT(*f)(PT arg),PT2 valueToTest);
+
+        string measuresToStringTime();
+        string measuresToStringCycle();
 
         void TimeStats();
         void CycleStats();

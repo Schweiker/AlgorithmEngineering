@@ -3,11 +3,10 @@
 
 #include <vector>
 #include <iostream>
-
-
 #include <cmath>
 #include <stdlib.h>
 #include <algorithm>
+#include <cmath>
 #include <functional>
 
 
@@ -22,13 +21,7 @@ class Sorting
         static void merges(vector<T> &toSort,T low, T high,T mid);
 
         template <typename T>
-        static T partition_quickSort(vector<T> &toSort, T left, T right);
-
-        template <typename T>
         static void swap(vector<T> &toWork,int i,int j);
-
-        template <typename T>
-        static T medianOfThreePartition(vector<T> &toSort,T p,T r);
 
     public:
 
@@ -39,13 +32,22 @@ class Sorting
         static void quickSort(vector<T> &toSort);
 
         template <typename T>
-        static void quickSorthelp(vector<T> &toSort,T left, T right);
+        static void quickSortHelp(vector<T> &toSort,int beginning,int end);
+
+        template <typename T>
+        static int qs_partition(vector<T> &toSort,int beginning, int end);
+
+        template <typename T>
+        static T median(vector<T> &a,int begs,int ends);
+
+        template <typename T>
+        static T medianOfThree(vector<T> &toLook,int left,int right);
 
         template <typename T>
         static void mergeSort(vector<T> &toSort);
 
         template <typename T>
-        static void mergeSorthelp(vector<T> &toSort,T low,T high);
+        static void mergeSortHelp(vector<T> &toSort,T low,T high);
 
         template <typename T>
         static bool isSorted(vector<T> &toCheck);

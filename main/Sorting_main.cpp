@@ -17,7 +17,8 @@ int main()
 
     vector<int> toSort (numbersOfElements,0);
 
-    Sorting::addRepeatedNumber(toSort);
+    Sorting::addReverseSortedNumbers(toSort);
+    Sorting::printOut(toSort);
     //for quicksort we use the same array as for insertion sort
     vector<int> clone1(toSort);
     //vector<int> clone2(toSort);
@@ -36,6 +37,7 @@ int main()
     //Sorting::printOut(toSort);
     Sorting::printOut(clone1);
     //Sorting::printOut(clone2);
+
 
 return 0;
 }
