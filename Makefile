@@ -10,6 +10,11 @@ LDFLAGS = /home/maximilian/gtest-1.7.0/lib/.libs/libgtest.a -pthread
 OBJECTS = objects/
 MAINS = main/
 
+BUILD ?= debug
+ifeq ($(BUILD), debug)
+	CXXFLAGS += -ggdb3 -DDEBUG
+endif
+
 #sources
 
 $(OBJECTS)Fibonacci.o: src/Fibonacci.cpp includes/Fibonacci.h

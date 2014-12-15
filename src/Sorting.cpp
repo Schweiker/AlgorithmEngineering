@@ -264,7 +264,7 @@ void Sorting::addSortedNumbers(vector<T> &toFill)
 {
     if(toFill.size() == 0)
     {
-
+        cout << "no place to fill in vector!" << endl;
     }
     for(int i = 0;i < toFill.size();i++)
     {

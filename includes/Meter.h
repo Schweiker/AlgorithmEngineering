@@ -37,7 +37,7 @@ class Meter
 
     double c_standardDeviation;
 
-    uint32_t numberOfTests;
+    //uint32_t numberOfTests;
 
     public:
 
@@ -46,19 +46,19 @@ class Meter
         Meter(const char* fileData,const char* FileCycle,const char* filePlotCycle,const char* filePlotTime);
 
         template<typename RT,typename PT,typename PT2>
-        void measure(uint32_t numOfTest, RT(*f)(PT arg),PT2 valueToTest);
+        void measure(RT(*f)(PT arg),PT2 valueToTest);
 
         template<typename RT,typename PT,typename PT2>
-        void measureAlgorithmTime(uint32_t numOfTest, RT(*f)(PT arg),PT2 valueToTest);
+        void measureAlgorithmTime(RT(*f)(PT arg),PT2 valueToTest);
 
         template<typename RT,typename PT,typename PT2>
-        void measureAlgorithmCycles(uint32_t numOfTest, RT(*f)(PT arg),PT2 valueToTest);
+        void measureAlgorithmCycles(RT(*f)(PT arg),PT2 valueToTest);
 
         string measuresToStringTime();
         string measuresToStringCycle();
 
-        void TimeStats();
-        void CycleStats();
+        void TimeStats(uint32_t measures);
+        void CycleStats(uint32_t measures);
 
         void initfileData();
         void initfileCycle();
@@ -71,21 +71,20 @@ class Meter
 
 
 template <typename RT, typename PT,typename PT2>
-void Meter::measure(uint32_t numOfTest, RT(*f)(PT arg), PT2 valueToTest)
+void Meter::measure(RT(*f)(PT arg), PT2 valueToTest)
 {
-    measureAlgorithmTime(numOfTest, (*f),valueToTest);
-    measureAlgorithmCycles(numOfTest, (*f), valueToTest);
+    //cout << "measure" << endl;
+    measureAlgorithmTime((*f),valueToTest);
+    //cout << "cycle" << endl;
+    measureAlgorithmCycles((*f), valueToTest);
 }
 template <typename RT, typename PT,typename PT2>
-void Meter::measureAlgorithmTime(uint32_t numOfTest, RT(*f)(PT arg), PT2 valueToTest)
+void Meter::measureAlgorithmTime(RT(*f)(PT arg), PT2 valueToTest)
 {
-
-    if(numOfTest > 0)numberOfTests = numOfTest;
-
-    t_measures = vector<uint64_t>(numberOfTests, 0);
-
+    uint32_t measures = 10;
+    t_measures = vector<uint64_t>(measures, 0);
     //do tests
-    for(uint64_t i = 0; i < numberOfTests; i++)
+    for(uint64_t i = 0; i < measures; i++)
     {
         w.start();
         (*f)(valueToTest);
@@ -93,17 +92,15 @@ void Meter::measureAlgorithmTime(uint32_t numOfTest, RT(*f)(PT arg), PT2 valueTo
         t_measures[i] = w.peek();
         w.reset();
     }
-    TimeStats();
+    TimeStats(measures);
 }
 
 template <typename RT, typename PT,typename PT2>
-void Meter::measureAlgorithmCycles(uint32_t numOfTest, RT(*f)(PT arg), PT2 valueToTest)
+void Meter::measureAlgorithmCycles(RT(*f)(PT arg), PT2 valueToTest)
 {
 
-    if(numOfTest > 0) numberOfTests = numOfTest;
-
-    //build Memory for Data from Measurements
-    c_measures = vector<uint64_t>(numberOfTests, 0);
+    uint32_t measures = 10;
+    c_measures = vector<uint64_t>(measures, 0);
 
 
 
@@ -115,7 +112,7 @@ void Meter::measureAlgorithmCycles(uint32_t numOfTest, RT(*f)(PT arg), PT2 value
     //disable hard interrupts
     //raw_local_irq_save(flags);
 
-    for(uint64_t i = 0; i < numberOfTests;i++)
+    for(uint64_t i = 0; i < measures;i++)
     {
 
         asm volatile
@@ -149,7 +146,7 @@ void Meter::measureAlgorithmCycles(uint32_t numOfTest, RT(*f)(PT arg), PT2 value
     //preempt_enable();
 
     //statistics
-    CycleStats();
+    CycleStats(measures);
 }
 
 #endif
