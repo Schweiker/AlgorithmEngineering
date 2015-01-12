@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-#include "../includes/Fibonacci.h"
+#include <Fibonacci.h>
 
 int main(int argc, char **argv)
 {

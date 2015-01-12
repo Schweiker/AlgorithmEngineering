@@ -11,65 +11,47 @@
 
 
 using namespace std;
-class Sorting
-{
-    private:
-
-        static void init();
 
         template <typename T>
-        static void merges(vector<T> &toSort,T low, T high,T mid);
+        int qs_partition(vector<T> &toSort,int beginning,int end);
 
         template <typename T>
-        static void swap(vector<T> &toWork,int i,int j);
-
-    public:
+        void merges(vector<T> &toSort,int low, int high,int mid);
 
         template <typename T>
-        static void insertionSort(vector<T> &toSort);
+        void insertionSort(vector<T> &toSort);
 
         template <typename T>
-        static void quickSort(vector<T> &toSort);
+        void quickSort(vector<T> &toSort);
 
         template <typename T>
-        static void quickSortHelp(vector<T> &toSort,int beginning,int end);
+        void mergeSort(vector<T> &toSort);
 
         template <typename T>
-        static int qs_partition(vector<T> &toSort,int beginning, int end);
+        bool isSorted(vector<T> &toCheck);
 
         template <typename T>
-        static T median(vector<T> &a,int begs,int ends);
+        void printOut(vector<T> &toPrint);
 
         template <typename T>
-        static T medianOfThree(vector<T> &toLook,int left,int right);
+        void addRandomNumbers(vector<T> &toFill);
 
         template <typename T>
-        static void mergeSort(vector<T> &toSort);
+        void addPermutedNumbers(vector<T> &toFill);
 
         template <typename T>
-        static void mergeSortHelp(vector<T> &toSort,T low,T high);
+        void addSortedNumbers(vector<T> &toFill);
 
         template <typename T>
-        static bool isSorted(vector<T> &toCheck);
+        void addReverseSortedNumbers(vector<T> &toFill);
 
         template <typename T>
-        static void printOut(vector<T> &toPrint);
+        void addRepeatedNumber(vector<T> &toFill);
 
         template <typename T>
-        static void addRandomNumbers(vector<T> &toFill);
+        void swap(vector<T> &toWork,int i,int j);
 
-        template <typename T>
-        static void addPermutedNumbers(vector<T> &toFill);
 
-        template <typename T>
-        static void addSortedNumbers(vector<T> &toFill);
-
-        template <typename T>
-        static void addReverseSortedNumbers(vector<T> &toFill);
-
-        template <typename T>
-        static void addRepeatedNumber(vector<T> &toFill);
-};
 
 
 #endif // Sorting_h

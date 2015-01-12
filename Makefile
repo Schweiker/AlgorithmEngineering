@@ -4,7 +4,7 @@ CXXFLAGS = -std=c++0x -Wall -O -c
 FLAGSFOROBJECTS = -o $@
 #-I/usr/src/linux-headers-3.13.0-32/include/asm-generic
 CXXFLAGS_GTEST = -I/home/maximilian/gtest-1.7.0/include
-CXXFLAGS_INCLUDE = -I/home/maximilian/Documents/AlgorithmEngineering/includes
+CXXFLAGS_INCLUDE = -Iincludes
 #LDFLAGS = -L/usr/lib/libgtest.a -pthread
 LDFLAGS = /home/maximilian/gtest-1.7.0/lib/.libs/libgtest.a -pthread
 OBJECTS = objects/
@@ -23,6 +23,12 @@ $(OBJECTS)Fibonacci.o: src/Fibonacci.cpp includes/Fibonacci.h
 $(OBJECTS)Sorting.o: src/Sorting.cpp includes/Sorting.h
 	$(CXX) $(CXXFLAGS) $(CXXFLAGS_INCLUDE) src/Sorting.cpp $(FLAGSFOROBJECTS)
 
+$(OBJECTS)Heapsort.o: src/Heapsort.cpp includes/Heapsort.h
+	$(CXX) $(CXXFLAGS) $(CXXFLAGS_INCLUDE) src/Heapsort.cpp $(FLAGSFOROBJECTS)
+
+$(OBJECTS)Introsort.o: src/Introsort.cpp includes/Introsort.h
+	$(CXX) $(CXXFLAGS) $(CXXFLAGS_INCLUDE) src/Introsort.cpp $(FLAGSFOROBJECTS)
+
 #tests
 
 $(OBJECTS)Fibonacci_gtest.o: $(MAINS)Fibonacci_gtest.cpp
@@ -37,8 +43,8 @@ fibtest: Fibonacci_gtest
 $(OBJECTS)Sorting_gtest.o: $(MAINS)Sorting_gtest.cpp
 	$(CXX) $(CXXFLAGS) $(CXXFLAGS_GTEST) $(CXXFLAGS_INCLUDE) $(MAINS)Sorting_gtest.cpp $(FLAGSFOROBJECTS)
 
-Sorting_gtest: $(OBJECTS)Sorting_gtest.o $(OBJECTS)Sorting.o
-	$(CXX) -o Sorting_gtest $(OBJECTS)Sorting_gtest.o $(OBJECTS)Sorting.o $(LDFLAGS)
+Sorting_gtest: $(OBJECTS)Sorting_gtest.o $(OBJECTS)Sorting.o $(OBJECTS)Heapsort.o $(OBJECTS)Introsort.o
+	$(CXX) -o Sorting_gtest $(OBJECTS)Sorting_gtest.o $(OBJECTS)Sorting.o $(OBJECTS)Heapsort.o $(OBJECTS)Introsort.o $(LDFLAGS)
 	./Sorting_gtest
 
 sorttest: Sorting_gtest
@@ -49,8 +55,8 @@ tests: Fibonacci_gtest Sorting_gtest
 $(OBJECTS)Sorting_main.o: $(MAINS)Sorting_main.cpp
 	$(CXX) $(CXXFLAGS) $(CXXFLAGS_INCLUDE) $(MAINS)Sorting_main.cpp $(FLAGSFOROBJECTS)
 
-Sorting_main: $(OBJECTS)Sorting.o $(OBJECTS)Sorting_main.o
-	$(CXX) -o Sorting_main $(OBJECTS)Sorting.o $(OBJECTS)Sorting_main.o $(LDFLAGS)
+Sorting_main: $(OBJECTS)Sorting.o $(OBJECTS)Sorting_main.o $(OBJECTS)Heapsort.o $(OBJECTS)Introsort.o
+	$(CXX) -o Sorting_main $(OBJECTS)Sorting.o $(OBJECTS)Sorting_main.o $(OBJECTS)Heapsort.o $(OBJECTS)Introsort.o $(LDFLAGS)
 	./Sorting_main
 
 sortmain: Sorting_main
@@ -64,8 +70,16 @@ Fibonacci_main: $(OBJECTS)Fibonacci_main.o $(OBJECTS)Fibonacci.o
 
 fibmain: Fibonacci_main
 
-# meter objects
+$(OBJECTS)Heapsort_main.o: $(MAINS)Heapsort_main.cpp
+	$(CXX) $(CXXFLAGS) $(CXXFLAGS_INCLUDE) $(MAINS)Heapsort_main.cpp $(FLAGSFOROBJECTS)
 
+Heapsort_main: $(OBJECTS)Heapsort_main.o $(OBJECTS)Heapsort.o
+	$(CXX) -o Heapsort_main $(OBJECTS)Heapsort_main.o $(OBJECTS)Heapsort.o $(LDFLAGS)
+	./Heapsort_main
+
+heapmain: Heapsort_main
+
+# meter objects
 $(OBJECTS)Stopwatch.o: test/Stopwatch.cpp includes/Stopwatch.h
 	$(CXX) $(CXXFLAGS) $(CXXFLAGS_INCLUDE) test/Stopwatch.cpp $(FLAGSFOROBJECTS)
 
@@ -82,8 +96,8 @@ Fibonacci_meter: $(OBJECTS)Fibonacci_meter.o $(OBJECTS)Fibonacci.o $(OBJECTS)Met
 	$(CXX) -o Fibonacci_meter $(OBJECTS)Fibonacci_meter.o $(OBJECTS)Fibonacci.o $(OBJECTS)Meter.o $(OBJECTS)Stopwatch.o $(LDFLAGS)
 	./Fibonacci_meter
 
-Sorting_meter: $(OBJECTS)Sorting_meter.o $(OBJECTS)Sorting.o $(OBJECTS)Meter.o $(OBJECTS)Stopwatch.o
-	$(CXX) -o Sorting_meter $(OBJECTS)Sorting_meter.o $(OBJECTS)Sorting.o $(OBJECTS)Meter.o $(OBJECTS)Stopwatch.o $(LDFLAGS)
+Sorting_meter: $(OBJECTS)Sorting_meter.o $(OBJECTS)Sorting.o $(OBJECTS)Meter.o $(OBJECTS)Stopwatch.o $(OBJECTS)Heapsort.o $(OBJECTS)Introsort.o
+	$(CXX) -o Sorting_meter $(OBJECTS)Sorting_meter.o $(OBJECTS)Sorting.o $(OBJECTS)Meter.o $(OBJECTS)Stopwatch.o $(OBJECTS)Heapsort.o $(OBJECTS)Introsort.o $(LDFLAGS)
 	./Sorting_meter
 
 sortmeter: Sorting_meter

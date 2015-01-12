@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 #include <Sorting.h>
+#include <Heapsort.h>
+#include <Introsort.h>
 
 using namespace std;
 //TESTS
@@ -8,77 +10,81 @@ using namespace std;
 TEST(TestInsertionSortRandomNumbers, SortTest)
 {
     vector<int> test(10,0);
-
-    Sorting::addRandomNumbers(test);
-
-    //Sorting::printOut(test);
-    Sorting::insertionSort(test);
-    //Sorting::printOut(test);
-
-    EXPECT_EQ(true, Sorting::isSorted(test));
+    addRandomNumbers(test);
+    insertionSort(test);
+    EXPECT_EQ(true, isSorted(test));
 }
 //permutaded numbers
 TEST(TestInsertionSortPermutadedNumbers, SortTest)
 {
     vector<int> test(10,0);
-
-    Sorting::addSameNumbers(test);
-    //Sorting::printOut(test);
-    Sorting::insertionSort(test);
-    //Sorting::printOut(test);
-
-    EXPECT_EQ(true, Sorting::isSorted(test));
+    addRepeatedNumber(test);
+    insertionSort(test);
+    EXPECT_EQ(true, isSorted(test));
 }
 //QUICKSORT
 TEST(TestQuickSortRandomNumbers, SortTest)
 {
     vector<int> test(10,0);
-    int length = test.size();
-
-    Sorting::addRandomNumbers(test);
-
-    //Sorting::printOut(test);
-    Sorting::quickSort(test,0,length - 1);
-    //Sorting::printOut(test);
-
-    EXPECT_EQ(true, Sorting::isSorted(test));
+    addRandomNumbers(test);
+    quickSort(test);
+    EXPECT_EQ(true, isSorted(test));
 }
 TEST(TestQuickSortPermutatedNumbers, SortTest)
 {
     vector<int> test(10,0);
-    int length = test.size() - 1;
-
-    Sorting::addSameNumbers(test);
-    //Sorting::printOut(test);
-
-    Sorting::quickSort(test,0,length);
-
-    EXPECT_EQ(true, Sorting::isSorted(test));
+    addRepeatedNumber(test);
+    quickSort(test);
+    EXPECT_EQ(true, isSorted(test));
 }
 //MERGESORT
 TEST(TestMergeSortRandomNumbers, SortTest)
 {
     vector<int> test(10,0);
-    int length = test.size()- 1;
-
-    Sorting::addRandomNumbers(test);
-
-    //Sorting::printOut(test);
-    Sorting::mergeSort(test,0,length);
-    //Sorting::printOut(test);
-
-    EXPECT_EQ(true, Sorting::isSorted(test));
+    addRandomNumbers(test);
+    mergeSort(test);
+    EXPECT_EQ(true, isSorted(test));
 }
 TEST(TestMergeSortPermutatedNumbers, Sorttest)
 {
     vector<int> test(10,0);
-    int length = test.size() - 1;
+    addRepeatedNumber(test);
+    quickSort(test);
+    EXPECT_EQ(true, isSorted(test));
 
-    Sorting::addSameNumbers(test);
-    Sorting::quickSort(test,0,length);
+}
 
-    EXPECT_EQ(true, Sorting::isSorted(test));
+TEST(TestHeapSortRandomNumbers, SortTest)
+{
+    vector<int> test(10,0);
+    addRandomNumbers(test);
+    heapsort(test);
+    EXPECT_EQ(true, isSorted(test));
+}
 
+TEST(TestHeapSortPermutedNumbers, SortTest)
+{
+    vector<int> test(10,0);
+    addPermutedNumbers(test);
+    heapsort(test);
+    EXPECT_EQ(true, isSorted(test));
+}
+
+
+TEST(TestIntroSortRandomNumbers, SortTest)
+{
+    vector<int> test(10,0);
+    addRandomNumbers(test);
+    introsort(test);
+    EXPECT_EQ(true, isSorted(test));
+}
+
+TEST(TestIntroSortPermutedNumbers, SortTest)
+{
+    vector<int> test(10,0);
+    addPermutedNumbers(test);
+    introsort(test);
+    EXPECT_EQ(true, isSorted(test));
 }
 
 int main(int argc, char **argv)

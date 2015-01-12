@@ -9,4 +9,7 @@ set output 'SortingAlgorithmTimeSorted.png'
 plot    'InsertionSort_Time_Plot_Sorted.txt' using 1:2 title 'InsertionSort' with lines ls 1,\
         'QuickSort_Time_Plot_Sorted.txt' using 1:2 title 'QuickSort' with lines ls 2,\
         'MergeSort_Time_Plot_Sorted.txt' using 1:2 title 'MergeSort' with lines ls 3,\
+        'Heapsort_Time_Plot_Sorted.txt' using 1:2 title 'Heapsort' with lines ls 4,\
+        'Introsort_Time_Plot_Sorted.txt' using 1:2 title 'Introsort' with lines ls 5,\
+        'sort_Time_Plot_Sorted.txt' using 1:2 title 'std::sort' with lines ls 6,\
 
