@@ -82,12 +82,13 @@ template <typename RT, typename PT,typename PT2>
 void Meter::measureAlgorithmTime(RT(*f)(PT arg), PT2 valueToTest)
 {
     uint32_t measures = 10;
+    PT2 toTest = valueToTest;
     t_measures = vector<uint64_t>(measures, 0);
     //do tests
     for(uint64_t i = 0; i < measures; i++)
     {
         w.start();
-        (*f)(valueToTest);
+        (*f)(toTest);
         w.stop();
         t_measures[i] = w.peek();
         w.reset();

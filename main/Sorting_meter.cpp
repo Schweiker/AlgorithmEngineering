@@ -376,7 +376,7 @@ int main()
         IntrosortRN.printDataToPlotCycle(AlgName,i);
         IntrosortRN.printDataToPlotTime(AlgName,i);
     }
-    /*
+
     cout << "std::sort on inputs" << endl;
     Meter sortP = Meter("sort_Time_Permuted.txt","sort_Cycle_Permuted.txt",
                         "sort_Cycle_Plot_Permuted.txt","sort_Time_Plot_Permuted.txt");
@@ -394,49 +394,47 @@ int main()
     {
         test.resize(i);
         addPermutedNumbers(test);
-        sortP.measure(*std::sort,test);
+        sortP.measure(*csort<int>,test);
         sortP.printDataTime(AlgName);
         sortP.printDataCycle(AlgName);
         sortP.printDataToPlotCycle(AlgName,i);
         sortP.printDataToPlotTime(AlgName,i);
     }
-    cout << "Introsort on Repeated Number" << endl;
+    cout << "std::sort on Repeated Number" << endl;
 
     for(uint32_t i = 1; i < numberoftest;i += (i/10)+1)
     {
         test.resize(i);
         addRepeatedNumber(test);
-        sortR.measure(*std::sort,test);
+        sortR.measure(*csort<int>,test);
         sortR.printDataTime(AlgName);
         sortR.printDataCycle(AlgName);
         sortR.printDataToPlotCycle(AlgName,i);
         sortR.printDataToPlotTime(AlgName,i);
     }
-    cout << "Introsort on Sorted Numbers" << endl;
+    cout << "std::sort on Sorted Numbers" << endl;
 
     for(uint32_t i = 1; i < numberoftest;i += (i/10)+1)
     {
         test.resize(i);
         addSortedNumbers(test);
-        sortSN.measure(*std::sort,test);
+        sortSN.measure(*csort<int>,test);
         sortSN.printDataTime(AlgName);
         sortSN.printDataCycle(AlgName);
         sortSN.printDataToPlotCycle(AlgName,i);
         sortSN.printDataToPlotTime(AlgName,i);
     }
-    cout << "Introsort on Reverse Sorted Numbers" << endl;
+    cout << "std::sort on Reverse Sorted Numbers" << endl;
 
     for(uint32_t i = 1; i < numberoftest;i += (i/10)+1)
     {
         test.resize(i);
         addReverseSortedNumbers(test);
-        sortRN.measure(*std::sort,test);
+        sortRN.measure(*csort<int>,test);
         sortRN.printDataTime(AlgName);
         sortRN.printDataCycle(AlgName);
         sortRN.printDataToPlotCycle(AlgName,i);
         sortRN.printDataToPlotTime(AlgName,i);
     }
-    */
-
 }
 

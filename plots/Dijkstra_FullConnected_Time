@@ -1,0 +1,12 @@
+
+set title "PlotDijkstra_fullConnected_time"
+set xlabel "n"
+set ylabel "time"
+set autoscale
+
+set terminal png size 1000,800
+set output 'Dijkstra_FullConnected_Graph_Time.png'
+
+plot    'Dijkstra_Binary_Time_Plot.txt' using 1:2 title 'Dijkstra BinaryHeap' with lines ls 1,\
+        'Dijkstra_Queue_Time_Plot.txt' using 1:2 title 'Dijkstra PriorityQueue' with lines ls 2,\
+        'Dijkstra_RedBlack_Time_Plot.txt' using 1:2 title 'Dijkstra RedBlack Tree' with lines ls 3,\

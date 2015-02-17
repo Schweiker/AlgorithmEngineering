@@ -1,6 +1,6 @@
 #makros
 CXX = g++
-CXXFLAGS = -std=c++0x -Wall -O -c
+CXXFLAGS = -std=c++0x -Wall -O -c -g
 FLAGSFOROBJECTS = -o $@
 #-I/usr/src/linux-headers-3.13.0-32/include/asm-generic
 CXXFLAGS_GTEST = -I/home/maximilian/gtest-1.7.0/include
@@ -128,6 +128,48 @@ meter: Sorting_meter Fibonacci_meter
 
 plot: fibplot sortplot
 
+######################################################################
+##For Dijkstra##
+
+$(OBJECTS)Dijkstra_redblack.o: src/Dijkstra_redblack.cpp includes/Dijkstra_redblack.h
+	$(CXX) $(CXXFLAGS) $(CXXFLAGS_INCLUDE) src/Dijkstra_redblack.cpp $(FLAGSFOROBJECTS)
+
+$(OBJECTS)Dijkstra_binary.o: src/Dijkstra_binary.cpp includes/Dijkstra_binary.h
+	$(CXX) $(CXXFLAGS) $(CXXFLAGS_INCLUDE) src/Dijkstra_binary.cpp $(FLAGSFOROBJECTS)
+
+$(OBJECTS)Dijkstra_pq.o: src/Dijkstra_pq.cpp includes/Dijkstra_pq.h
+	$(CXX) $(CXXFLAGS) $(CXXFLAGS_INCLUDE) src/Dijkstra_pq.cpp $(FLAGSFOROBJECTS)
+
+$(OBJECTS)Dijkstra_gtest.o: $(MAINS)Dijkstra_gtest.cpp
+	$(CXX) $(CXXFLAGS) $(CXXFLAGS_GTEST) $(CXXFLAGS_INCLUDE) $(MAINS)Dijkstra_gtest.cpp $(FLAGSFOROBJECTS)
+
+$(OBJECTS)Dijkstra_main.o: $(MAINS)Dijkstra_main.cpp
+	$(CXX) $(CXXFLAGS) $(CXXFLAGS_INCLUDE) $(MAINS)Dijkstra_main.cpp $(FLAGSFOROBJECTS)
+
+$(OBJECTS)Dijkstra_meter.o: $(MAINS)Dijkstra_meter.cpp
+	$(CXX) $(CXXFLAGS) $(CXXFLAGS_INCLUDE) $(MAINS)Dijkstra_meter.cpp $(FLAGSFOROBJECTS)
+
+Dijkstra_main: $(OBJECTS)Dijkstra_redblack.o $(OBJECTS)Dijkstra_binary.o $(OBJECTS)Dijkstra_pq.o $(OBJECTS)Dijkstra_main.o
+	$(CXX) -o Dijkstra_main $(OBJECTS)Dijkstra_redblack.o $(OBJECTS)Dijkstra_binary.o $(OBJECTS)Dijkstra_pq.o $(OBJECTS)Dijkstra_main.o $(LDFLAGS)
+	#./Dijkstra_main
+
+Dijkstra_gtest: $(OBJECTS)Dijkstra_redblack.o $(OBJECTS)Dijkstra_binary.o $(OBJECTS)Dijkstra_pq.o $(OBJECTS)Dijkstra_gtest.o
+	$(CXX) -o Dijkstra_gtest $(OBJECTS)Dijkstra_redblack.o $(OBJECTS)Dijkstra_binary.o $(OBJECTS)Dijkstra_pq.o $(OBJECTS)Dijkstra_gtest.o $(LDFLAGS)
+	./Dijkstra_gtest
+
+Dijkstra_meter: $(OBJECTS)Dijkstra_redblack.o $(OBJECTS)Dijkstra_binary.o $(OBJECTS)Dijkstra_pq.o $(OBJECTS)Dijkstra_meter.o $(OBJECTS)Stopwatch.o $(OBJECTS)Meter.o
+	$(CXX) -o Dijkstra_meter $(OBJECTS)Dijkstra_redblack.o $(OBJECTS)Dijkstra_binary.o $(OBJECTS)Dijkstra_pq.o $(OBJECTS)Dijkstra_meter.o $(OBJECTS)Stopwatch.o $(OBJECTS)Meter.o $(LDFLAGS)
+
+pathmain: Dijkstra_main
+
+path_gtest: Dijkstra_gtest
+
+path_meter: Dijkstra_meter
+
+path_plot:
+	gnuplot 'plots/Dijkstra_FullConnected_Cycle'
+	gnuplot 'plots/Dijkstra_FullConnected_Time'
+
 # Removes all objects and executables:
 
 cleantxt:
@@ -137,7 +179,7 @@ cleanplot:
 	rm -f *.png
 
 clean:
-	rm -f objects/*.o Fibonacci_main Fibonacci_gtest Fibonacci_meter Sorting_main Sorting_gtest Sorting_meter
+	rm -f objects/*.o Fibonacci_main Fibonacci_gtest Fibonacci_meter Sorting_main Sorting_gtest Sorting_meter Dijkstra*
 	reset
 
 cleanall: cleantxt cleanplot clean

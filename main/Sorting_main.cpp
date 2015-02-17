@@ -17,7 +17,7 @@ int main()
     vector<int> a(numbersOfElements,0);
     addRandomNumbers(a);
     printOut(a);
-    introsort(a);
+    csort(a);
     printOut(a);
     return 0;
 }

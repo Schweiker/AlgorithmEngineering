@@ -277,6 +277,12 @@ void mergeSort(vector<T> &toSort)
 
 }
 
+template<typename T>
+void csort(vector<T> &toSort)
+{
+    std::sort(toSort.begin(),toSort.end());
+}
+
 
 //for gtest
 template <typename T>
@@ -418,6 +424,7 @@ template bool isSorted<int>(vector<int>&);
 template void mergeSort<int>(vector<int>&);
 template void quickSort<int>(vector<int>&);
 template void insertionSort<int>(vector<int>&);
+template void csort<int>(vector<int>&);
 
 template int qs_partition<int>(vector<int>&,int,int);
 

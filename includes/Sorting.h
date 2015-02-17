@@ -51,6 +51,8 @@ using namespace std;
         template <typename T>
         void swap(vector<T> &toWork,int i,int j);
 
+        template <typename T>
+        void csort(vector<T> &toSort);
 
 
 

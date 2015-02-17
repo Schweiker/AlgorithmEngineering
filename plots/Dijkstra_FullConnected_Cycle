@@ -1,0 +1,11 @@
+set title "PlotDijkstra_fullConnected_cycle"
+set xlabel "n"
+set ylabel "cycles"
+set autoscale
+
+set terminal png size 1000,800
+set output 'Dijkstra_FullConnected_Graph_Cycle.png'
+
+plot    'Dijkstra_Binary_Cycle_Plot.txt' using 1:2 title 'Dijkstra BinaryHeap' with lines ls 1,\
+        'Dijkstra_Queue_Cycle_Plot.txt' using 1:2 title 'Dijkstra PriorityQueue' with lines ls 2,\
+        'Dijkstra_RedBlack_Cycle_Plot.txt' using 1:2 title 'Dijkstra RedBlack Tree' with lines ls 3,\
